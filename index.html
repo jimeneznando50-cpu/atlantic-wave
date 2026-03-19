@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Atlantic Wave — Puerto Plata, Dominican Republic</title>
+  <meta name="description" content="Discover Puerto Plata with Atlantic Wave. Explore local businesses, restaurants, and authentic experiences.">
+  <meta name="keywords" content="Puerto Plata, tourism, Dominican Republic, restaurants, experiences, travel guide">
+  <meta name="author" content="Atlantic Wave">
+  <link rel="icon" href="js/images/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <!-- EmailJS -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+</head>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav id="navbar">
+  <a href="#home" class="logo">Atlantic<span>Wave</span></a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#explore"      onclick="closeNav()">Explore</a></li>
+    <li><a href="#experiences"  onclick="closeNav()">Experiences</a></li>
+    <li><a href="#map"          onclick="closeNav()">Map</a></li>
+    <li><a href="#ai-assistant" onclick="closeNav()">AI Assistant</a></li>
+    <li><a href="#about"        onclick="closeNav()">About</a></li>
+    <li><a href="#contact" class="nav-cta" onclick="closeNav()">Contact</a></li>
+  </ul>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ── HERO ── -->
+<section id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-badge"><span class="pulse-dot"></span> Puerto Plata, Dominican Republic</div>
+    <h1>Discover Puerto Plata<br><em>Like Never Before</em></h1>
+    <p class="hero-sub">Your gateway to authentic Caribbean experiences — connecting travelers with the finest restaurants, tours, artisans, and hidden gems on the Dominican North Coast.</p>
+    <div class="hero-btns">
+      <a href="#explore" class="btn-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        Explore Businesses
+      </a>
+      <a href="#experiences" class="btn-outline">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        Find Experiences
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">120+</div><div class="stat-label">Local Businesses</div></div>
+      <div class="stat"><div class="stat-num">40+</div><div class="stat-label">Experiences</div></div>
+      <div class="stat"><div class="stat-num">4.9★</div><div class="stat-label">Tourist Rating</div></div>
+    </div>
+  </div>
+  <div class="waves-svg">
+    <svg viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <path d="M0,40 C240,80 480,0 720,40 C960,80 1200,0 1440,40 L1440,80 L0,80 Z" fill="#f8fbff"/>
+    </svg>
+  </div>
+</section>
+
+<!-- ── SEARCH ── -->
+<div class="search-section">
+  <div class="search-bar">
+    <div class="search-input-wrap">
+      <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      <input class="search-input" id="searchInput" placeholder="Search restaurants, tours, artisans..." type="text" oninput="renderBiz()">
+    </div>
+    <select class="filter-select" id="categoryFilter" onchange="renderBiz()">
+      <option value="">All Categories</option>
+      <option value="restaurant">🍽 Restaurants</option>
+      <option value="tour">🧭 Tours</option>
+      <option value="artisan">🎨 Artisans</option>
+      <option value="activity">🏄 Activities</option>
+      <option value="transport">🚐 Transportation</option>
+    </select>
+    <button class="btn-search" onclick="renderBiz()">Search</button>
+  </div>
+</div>
+
+<!-- ── EXPLORE ── -->
+<section id="explore">
+  <div class="section-header reveal">
+    <div class="section-label">🌴 Local Marketplace</div>
+    <h2 class="section-title">Explore Puerto Plata's Finest</h2>
+    <p class="section-sub">Authentic local businesses handpicked to deliver unforgettable experiences on the Dominican Republic's stunning North Coast.</p>
+  </div>
+  <div class="categories reveal">
+    <button class="cat-btn active" onclick="setCat(this,'')">All</button>
+    <button class="cat-btn" onclick="setCat(this,'restaurant')">🍽 Restaurants</button>
+    <button class="cat-btn" onclick="setCat(this,'tour')">🧭 Tours</button>
+    <button class="cat-btn" onclick="setCat(this,'artisan')">🎨 Artisans</button>
+    <button class="cat-btn" onclick="setCat(this,'activity')">🏄 Activities</button>
+    <button class="cat-btn" onclick="setCat(this,'transport')">🚐 Transportation</button>
+  </div>
+  <div class="grid-3" id="bizGrid"></div>
+</section>
+
+<!-- ── EXPERIENCES ── -->
+<section id="experiences">
+  <div class="section-header reveal">
+    <div class="section-label">✨ Must-Do Activities</div>
+    <h2 class="section-title">Unforgettable Experiences</h2>
+    <p class="section-sub">From misty mountain waterfalls to sunset catamaran cruises — adventure awaits around every corner in Puerto Plata.</p>
+  </div>
+  <div class="exp-grid" id="expGrid"></div>
+</section>
+
+<!-- ── MAP ── -->
+<section id="map">
+  <div class="section-header reveal">
+    <div class="section-label">📍 Interactive Map</div>
+    <h2 class="section-title">Explore the Territory</h2>
+    <p class="section-sub">Navigate Puerto Plata's top businesses and tourist attractions with our interactive map.</p>
+  </div>
+  <div class="map-wrap reveal">
+    <iframe class="map-frame"
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d60473.0!2d-70.6895!3d19.7995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8eb1cf4db1c9c3f1%3A0xca70a0f37a4af50d!2sPuerto%20Plata%2C%20Dominican%20Republic!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus"
+      allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+    <div class="map-legend">
+      <h4>Legend</h4>
+      <div class="legend-item"><div class="legend-dot" style="background:#ff6b6b"></div> Restaurants</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#00b4d8"></div> Tours</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#52c41a"></div> Artisans</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#f39c12"></div> Activities</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#0a3d62"></div> Transport</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── AI ASSISTANT ── -->
+<section id="ai-assistant">
+  <div class="ai-header reveal">
+    <div class="section-label">🤖 Smart Travel Help</div>
+    <h2 class="section-title" style="color:var(--ocean);">Your AI Travel Assistant</h2>
+    <p class="section-sub" style="margin:0 auto;">Ask anything about Puerto Plata — from restaurant picks to adventure tours.</p>
+  </div>
+  <div class="chat-container reveal">
+    <div class="chat-header">
+      <div class="chat-avatar">🌊</div>
+      <div class="chat-info">
+        <h3>Atlantic Wave Assistant</h3>
+        <p><span class="online-dot"></span>Online — Powered by Claude AI</p>
+      </div>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+      <div class="msg bot">
+        <div class="msg-av bot">🌊</div>
+        <div class="msg-bubble">
+          <p>¡Hola! I'm your Atlantic Wave travel assistant. I can help you discover the best of Puerto Plata — restaurants, tours, beaches, and hidden gems. What would you like to explore today?</p>
+        </div>
+      </div>
+    </div>
+    <div class="chat-prompts">
+      <button class="prompt-chip" onclick="sendPrompt(this.textContent)">Where can I eat near the beach?</button>
+      <button class="prompt-chip" onclick="sendPrompt(this.textContent)">Best tours in Puerto Plata</button>
+      <button class="prompt-chip" onclick="sendPrompt(this.textContent)">Tell me about 27 Waterfalls</button>
+      <button class="prompt-chip" onclick="sendPrompt(this.textContent)">Cable car tickets &amp; hours</button>
+    </div>
+    <div class="chat-input-row">
+      <input class="chat-input" id="chatInput" placeholder="Ask me anything about Puerto Plata..." onkeydown="if(event.key==='Enter')sendChat()">
+      <button class="btn-send" onclick="sendChat()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ── ABOUT ── -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-img-wrap reveal">
+      <img class="about-img" src="https://images.unsplash.com/photo-1501854140801-50d01698950b?w=800&q=80" alt="Puerto Plata landscape">
+      <div class="about-overlay"></div>
+      <div class="about-badge">
+        <div class="big-n">2024</div>
+        <div class="sml">Founded in Puerto Plata, DR</div>
+      </div>
+    </div>
+    <div class="reveal">
+      <div class="section-label">🌊 Who We Are</div>
+      <h2 class="section-title">About Atlantic Wave</h2>
+      <p style="color:var(--text-light);line-height:1.8;margin-bottom:1rem;">Atlantic Wave is a digital tourism marketplace born from a deep passion for Puerto Plata and a vision to connect the world with the authentic Caribbean spirit that makes this city extraordinary.</p>
+      <p style="color:var(--text-light);line-height:1.8;margin-bottom:2rem;">We bridge the gap between tourists seeking genuine local experiences and the talented entrepreneurs, restaurateurs, artisans, and tour operators who make Puerto Plata one of the Dominican Republic's most vibrant destinations.</p>
+      <div class="values-grid">
+        <div class="val-card">
+          <h4>🎯 Our Mission</h4>
+          <p>Empower local businesses to reach global travelers while delivering authentic, unforgettable Caribbean experiences.</p>
+        </div>
+        <div class="val-card">
+          <h4>🔭 Our Vision</h4>
+          <p>Become the leading digital tourism platform for the entire North Coast of the Dominican Republic.</p>
+        </div>
+        <div class="val-card">
+          <h4>💙 Authenticity</h4>
+          <p>Every business on our platform is handpicked for quality, hospitality, and genuine local character.</p>
+        </div>
+        <div class="val-card">
+          <h4>🌱 Community</h4>
+          <p>We invest in local talent and ensure tourism revenue benefits the people of Puerto Plata directly.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ── -->
+<section id="contact">
+  <div class="reveal">
+    <div class="section-label">📬 Get In Touch</div>
+    <h2 class="section-title">Contact Atlantic Wave</h2>
+    <p class="section-sub">Have a question or want to list your business? We'd love to hear from you.</p>
+  </div>
+  <div class="contact-grid">
+    <form class="contact-form reveal" onsubmit="handleForm(event)">
+      <div class="form-group">
+        <label class="form-label">Full Name</label>
+        <input class="form-input" placeholder="John Smith" type="text" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email Address</label>
+        <input class="form-input" placeholder="john@email.com" type="email" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Subject</label>
+        <input class="form-input" placeholder="List my business / General inquiry" type="text">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Message</label>
+        <textarea class="form-textarea" placeholder="Tell us how we can help…"></textarea>
+      </div>
+      <button class="btn-submit" type="submit">Send Message →</button>
+    </form>
+    <div class="contact-info reveal">
+      <div class="contact-item">
+        <div class="contact-icon">📍</div>
+        <div class="contact-item-text">
+          <h4>Location</h4>
+          <p>Puerto Plata, Dominican Republic<br>North Coast — CP 57000</p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📧</div>
+        <div class="contact-item-text">
+          <h4>Email</h4>
+          <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="dcb4b9b0b0b39cbda8b0bdb2a8b5bfabbdaab9f2b8b3">[email&#160;protected]</a></p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📞</div>
+        <div class="contact-item-text">
+          <h4>Phone</h4>
+          <p>+1 (829) 297-3877</p>
+        </div>
+      </div>
+      <a class="wa-btn" href="https://wa.me/18095550190" target="_blank">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        Chat on WhatsApp
+      </a>
+      <div>
+        <p style="color:rgba(255,255,255,0.45);font-size:.82rem;margin-bottom:.7rem;">Follow us on social media</p>
+        <div class="social-links">
+          <a class="social-link" href="https://www.instagram.com/atlanticwavepuertoplata/" title="Instagram">📷</a>
+          <a class="social-link" href="https://www.facebook.com/AtlanticWavePuertoPlata/" title="Facebook">👥</a>
+          <a class="social-link" href="https://www.tiktok.com/@atlanticwavepuertoplata" title="TikTok">🎵</a>
+          <a class="social-link" href="https://www.youtube.com/@AtlanticWavePuertoPlata" title="YouTube">▶️</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-logo">Atlantic<span>Wave</span></div>
+    <div class="footer-links">
+      <a href="#explore">Explore</a>
+      <a href="#experiences">Experiences</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+      <a href="#">Privacy Policy</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2024 Atlantic Wave — Puerto Plata, Dominican Republic. Crafted with 🌊 for authentic travel experiences.</p>
+  </div>
+</footer>
+
+<!-- ── MODAL: Business Details ── -->
+<div class="modal-overlay" id="modalOverlay" onclick="maybeCloseModal(event)">
+  <div class="modal-wrap">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-card">
+      <img id="modalImg" class="modal-img" src="" alt="">
+      <div class="modal-body">
+        <h2 id="modalName"></h2>
+        <div class="modal-tags" id="modalTags"></div>
+        <p id="modalDesc"></p>
+        <p id="modalExtra" style="color:var(--text-mid);font-size:.9rem;margin-top:.4rem;"></p>
+        <div class="modal-actions">
+          <a id="modalWa" href="#" target="_blank" class="btn-wa-modal">💬 WhatsApp</a>
+          <button class="btn-back" onclick="closeModal()">← Back</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ── MODAL: Booking ── -->
+<div id="bookingModal" class="booking-modal" onclick="maybeCloseBooking(event)">
+  <div class="booking-content">
+
+    <div class="booking-header">
+      <div class="booking-header-icon">🌊</div>
+      <div>
+        <h2 class="booking-title"></h2>
+        <p class="booking-subtitle">Complete your reservation</p>
+      </div>
+      <span class="booking-close" onclick="closeBooking()">&#x2715;</span>
+    </div>
+
+    <div class="booking-price-badge">
+      <span class="booking-price-per">Price per person</span>
+      <span class="booking-price"></span>
+    </div>
+
+    <div class="booking-form">
+
+      <div class="booking-field">
+        <label>&#x1F4C5; Date</label>
+        <input type="date" id="bookingDate">
+      </div>
+
+      <div class="booking-field">
+        <label>&#x1F465; Number of People</label>
+        <div class="people-counter">
+          <button type="button" onclick="changePeople(-1)">&#x2212;</button>
+          <span id="peopleCount">1</span>
+          <button type="button" onclick="changePeople(1)">&#x2B;</button>
+        </div>
+      </div>
+
+      <div class="booking-field">
+        <label>&#x1F464; Full Name</label>
+        <input type="text" id="bookingName" placeholder="John Smith">
+      </div>
+
+      <div class="booking-field">
+        <label>&#x1F4E7; Email</label>
+        <input type="email" id="bookingEmail" placeholder="john@email.com">
+      </div>
+
+    </div>
+
+    <div class="booking-total">
+      <span>Total</span>
+      <span id="bookingTotal" class="booking-total-amount">$0</span>
+    </div>
+
+    <button class="confirm-btn" onclick="confirmBooking()">Confirm Booking &#x2192;</button>
+    <button class="booking-cancel" onclick="closeBooking()">Cancel</button>
+
+  </div>
+</div>
+
+<!-- ── SCRIPT ── -->
+<script src="js/app.js"></script>
+
+</body>
+</html>

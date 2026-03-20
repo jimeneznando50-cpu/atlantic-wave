@@ -426,21 +426,20 @@ async function sendChat() {
   msgs.appendChild(typingDiv);
   msgs.scrollTop = msgs.scrollHeight;
 
-  try {
-    const res  = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
+try {
+    const res = await fetch("/api/chat", {
+      method:  "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        model:      "claude-sonnet-4-20250514",
-        max_tokens: 1000,
-        system:     "You are an enthusiastic AI travel assistant for Atlantic Wave, a tourism marketplace for Puerto Plata, Dominican Republic. Help tourists discover local restaurants, tours, artisans, activities, and attractions. Keep responses friendly, concise (under 150 words), and practical. Use bullet points for lists. Use 1-2 emojis max. Focus on Puerto Plata and the Dominican North Coast.",
-        messages:   [{ role: "user", content: text }]
-      })
+      body:    JSON.stringify({ message: text })
     });
+
+    if (!res.ok) throw new Error("API error");
+
     const data  = await res.json();
     typingDiv.remove();
-    const reply = data.content?.[0]?.text || getFallback(text);
+    const reply = data.reply || getFallback(text);
     appendMsg(reply, false);
+
   } catch {
     typingDiv.remove();
     appendMsg(getFallback(text), false);

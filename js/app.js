@@ -453,7 +453,7 @@ function sendPrompt(text) {
 // ── INIT EmailJS ──────────────────────────────────────────────
 emailjs.init("7amPATc7B-k9wQmt7");
 // ── CONTACT FORM (EmailJS) ─────────────────────
-const EMAILJS_SERVICE_ID  = "service_ubj4wlq";
+const EMAILJS_SERVICE_ID  = "service_u5ardom";
 const EMAILJS_TEMPLATE_ID = "template_7wztg6p";
 const EMAILJS_PUBLIC_KEY  = "7amPATc7B-k9wQmt7";
 
